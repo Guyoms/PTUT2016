@@ -9,13 +9,13 @@ import java.util.Collection;
  */
 
 public class Grid {
-	private Collection<Element> content;
+	//private Collection<Element> content;
 	private int height;
 	private int length;
 	
 	public Grid(int height, int length){
 		this.height=height;
 		this.length=length;
-		this.content = new ArrayList<Element>();
+		//this.content = new ArrayList<Element>();
 	}
 }

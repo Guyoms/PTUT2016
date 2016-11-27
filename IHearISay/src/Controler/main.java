@@ -9,9 +9,9 @@ import View.mainWindow;
 public class main {
 
 	public static void main(String[] args) {
-		JFrame test = new mainWindow("test");
-        test.setLocationRelativeTo(null);
-        test.setVisible(true);
+		JFrame myMainWindow = new mainWindow("I hear I say !");
+		myMainWindow.setLocationRelativeTo(null);
+		myMainWindow.setVisible(true);
 
 	}
 
