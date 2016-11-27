@@ -1,0 +1,66 @@
+package Model;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Scanner;
+
+public class TestGrille {
+
+	public static void main(String[] args) {
+		String deb = "Start";
+		Scanner sc = new Scanner(System.in);
+		String prem = null;
+		int taille, nbMot;
+		int i = 0;
+		ArrayList<String> arL = new ArrayList<>();
+		LinkedHashMap<String, String> tab; 
+		
+		
+		System.out.println("Combien de mots voulez vous entrer ? Entrez 0 si vous ne savez pas.");
+		nbMot = sc.nextInt();
+		
+		if (nbMot == 0){
+			// Valeur temporaire, plus tard = maximum taille
+			tab = new LinkedHashMap<>(20);
+			taille = 20;
+		}else {
+			// taille de la Map (+1 première case)
+			tab = new LinkedHashMap<>((nbMot/2)+1);
+			taille = nbMot;
+		}
+		
+		// Ajout du premier mot dans l'ArrayList
+		System.out.println("Premier mot : ");
+		prem = sc.next();
+		arL.add(prem);
+		
+		
+		
+		// On remplit l'ArrayList
+		while (i<taille-1){
+			System.out.println("Entrez le mot suivant (stop pour finir) : " );
+			prem = sc.next();
+			
+			if (prem.equals("stop")){
+				i = taille-1;
+			}else{
+				arL.add(prem);
+				i++;
+			}
+			
+		}
+		
+		// On remplit la LinkedHashMap
+		for (i = 0; i< taille;i++){
+			if (i==0){
+				tab.put(deb, arL.get(0));
+			}else{
+				tab.put(arL.get(i-1),arL.get(i) );
+			}
+		}
+			// Affichage test de la LinkedHashMap
+			System.out.println(tab);
+	}
+
+}
