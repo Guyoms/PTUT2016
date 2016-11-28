@@ -7,6 +7,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -19,6 +21,7 @@ import javax.swing.border.Border;
 
 public class mainWindow extends JFrame{
 
+	private ArrayList<JButton> alButton = new ArrayList<JButton>();
 	private JButton[][] contentGrid = new JButton[5][5];
 	private int i; //Row
 	private int j; //Line
@@ -67,8 +70,13 @@ public class mainWindow extends JFrame{
     				if(i!=4){
         				this.contentGrid[i+1][j-1] = JButtonIhearTemp;
     				}
+    				
+    				alButton.add(JButtonIhearTemp);
+    				alButton.add(JButtonIsayTemp);
+    				
         			result.add(JButtonIhearTemp);
         			result.add(JButtonIsayTemp);
+        		
     			}
     			
     			
@@ -77,26 +85,18 @@ public class mainWindow extends JFrame{
 					
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
 					}
 					
 					@Override
 					public void mousePressed(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
 					}
 					
 					@Override
 					public void mouseExited(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
 					}
 					
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
 					}
 					
 					@Override
@@ -106,20 +106,27 @@ public class mainWindow extends JFrame{
 						j = e.getComponent().getX()/e.getComponent().getWidth(); //Update j to the selected tile
 						
 						String newContent = JOptionPane.showInputDialog("Text of this tile");
-						JButtonIsayTemp.setText(newContent);
+						alButton.get(i+j).setText(newContent);
+						alButton.get(i+j).setText(newContent);
+						
+						//Clear the grid, removes every button and display the empty grid
+						result.removeAll();
+						result.setLayout(new GridLayout(5, 5));
+						revalidate();
+						repaint();
 						
 						
-						//TODO : fait en sorte que modifier la case "I say" modifie également la case "I hear" aossciée
-						/*
-						if(i<4){
-							JButton JButtonIhearTemp = new JButton(newContent);
-							contentGrid[i+1][j-1] = JButtonIhearTemp;
-							JButtonIhearTemp.setBackground(new Color(15, 255, 255)); //Cyan
-							JButtonIhearTemp.setBorder(BorderLowered);
-							//result.add(JButtonIhearTemp);
-							
+						//TODO : remplis à nouveau la grille (s'arret)
+						for (i=0; i<5; i++){
+				    		for (j=0; j<5; j++){
+
+				    			System.out.println("i : " + i + " | j :" + j + " | contentGrid length : " + contentGrid.length);
+				    			
+				    			contentGrid[i][j]=alButton.get(i+j);
+				    			result.add(contentGrid[i][j]);
+				    		}
 						}
-						*/
+						
 						
 					}
 				});
