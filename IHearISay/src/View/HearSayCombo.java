@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
@@ -15,11 +16,14 @@ public class HearSayCombo {
 	private Color colorIHear = new Color(15, 255, 255); //Cyan
 	private Color colorISay = new Color(255, 255, 15); //Yellow
 	private Border BorderButtons = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
+	private Dimension taille = new Dimension(90,90);
 	
 	//Should be used over default constructor, create empty buttons and add them to panelToAddButtons
 	public HearSayCombo(JPanel panelToAddButtons){
 		this.IHearButton = new JButton("");
 		this.ISayButton = new JButton("");
+		this.ISayButton.setPreferredSize(taille);
+		this.IHearButton.setPreferredSize(taille);
 		this.standardEdit(panelToAddButtons);
 	}
 	
@@ -27,6 +31,8 @@ public class HearSayCombo {
 	public HearSayCombo(String textButtons, JPanel panelToAddButtons){
 		this.IHearButton = new JButton(textButtons);
 		this.ISayButton = new JButton(textButtons);
+		this.ISayButton.setPreferredSize(taille);
+		this.IHearButton.setPreferredSize(taille);
 		this.standardEdit(panelToAddButtons);
 	}
 	

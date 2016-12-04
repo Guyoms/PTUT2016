@@ -23,14 +23,14 @@ import javax.swing.border.Border;
 import java.awt.GridBagLayout;
 
 
-public class mainWindow extends JFrame{
+public class mainWindow2 extends JFrame{
 
 	private ArrayList<JButton> alButton = new ArrayList<JButton>();
 	private String defaultText = "test";
 	private int nbLines = 5;
 	private int nbRows = 7; // Must be an uneven number (number/2=1) !!!! or Interface goes weird
 	
-	public mainWindow(String titre) {
+	public mainWindow2(String titre) {
         super(titre);
         
         super.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -57,7 +57,6 @@ public class mainWindow extends JFrame{
     	
 // Création de la grille 
     	Border BorderTitledGrid = BorderFactory.createTitledBorder("Grid");
-    	Border BorderTitledGrid2 = BorderFactory.createTitledBorder("Your choice");
     	
     	JButton buttonStart = new JButton("Start");
     	JButton buttonEnd = new JButton("End");
@@ -78,7 +77,6 @@ public class mainWindow extends JFrame{
 					public void actionPerformed(ActionEvent e) {
 						String newText = JOptionPane.showInputDialog("Enter the new text :");
 						temp.setText(newText);
-						//TODO : ajouter dans la List
 						
 					}
 				});
@@ -90,46 +88,18 @@ public class mainWindow extends JFrame{
     	grille.setBorder(BorderTitledGrid);
 //fin de création de la grille 
 
-    	// Création des boutons de fonctionnalités
-    	JButton butCreer = new JButton("Créer");
-    	JButton butImport = new JButton("Importer");
-    	JButton butExport = new JButton("Exporter");
+// Création des boutons de fonctionnalités
+    	boutons.add(new JButton("Créer"));
+    	boutons.add(new JButton("Importer"));
+    	boutons.add(new JButton("Exporter"));
+    		
     	
-    	//Ajout des Listener
-    	butCreer.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(new JFrame(), "Not implemented yet...");
-				
-			}
-		});
     	
-    	butImport.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(new JFrame(), "Not implemented yet...");
-				
-			}
-		});
-    	butExport.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(new JFrame(), "Not implemented yet...");
-				
-			}
-		});
     	
-    	boutons.add(butCreer);
-    	boutons.add(butImport);
-    	boutons.add(butExport);
-
-    	boutons.setBorder(BorderTitledGrid2);
-
-
-    	result.add(grille, BorderLayout.CENTER);
+    	
+    	
+    	
+    	result.add(grille, BorderLayout.WEST);
     	result.add(boutons, BorderLayout.EAST);
     	
     	return result;

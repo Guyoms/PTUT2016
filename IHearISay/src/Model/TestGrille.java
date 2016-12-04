@@ -1,6 +1,8 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
@@ -35,6 +37,7 @@ public class TestGrille {
 		prem = sc.next();
 		arL.add(prem);
 		
+
 		
 		
 		// On remplit l'ArrayList
@@ -49,6 +52,10 @@ public class TestGrille {
 				i++;
 			}
 		}
+		
+		//Shuffle de l'array 
+		Collections.shuffle(arL);
+
 		
 		// On remplit la LinkedHashMap
 		for (int j = 0; j <= i; j++){

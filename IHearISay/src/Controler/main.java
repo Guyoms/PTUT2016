@@ -3,6 +3,7 @@ package Controler;
 import javax.swing.JFrame;
 
 import View.mainWindow;
+import View.mainWindow2;
 
 public class main {
 
@@ -10,7 +11,6 @@ public class main {
 		JFrame myMainWindow = new mainWindow("I hear I say !");
 		myMainWindow.setLocationRelativeTo(null);
 		myMainWindow.setVisible(true);
-
 	}
 
 }
