@@ -3,6 +3,8 @@ package View;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -22,9 +24,9 @@ import javax.swing.border.Border;
 public class mainWindow extends JFrame{
 
 	private ArrayList<JButton> alButton = new ArrayList<JButton>();
-	private JButton[][] contentGrid = new JButton[5][5];
-	private int i; //Row
-	private int j; //Line
+	private String defaultText = "test";
+	private int nbLines = 5;
+	private int nbRows = 7; // Must be an uneven number (number/2=1) !!!! or Interface goes weird
 	
 	public mainWindow(String titre) {
         super(titre);
@@ -46,92 +48,37 @@ public class mainWindow extends JFrame{
     }
 	
 	private JPanel inside() {
-    	JPanel result = new JPanel(new GridLayout(5, 5));
+    	JPanel result = new JPanel(new GridLayout(this.nbLines, this.nbRows));
     	
     	Border BorderTitledGrid = BorderFactory.createTitledBorder("Grid");
-    	Border BorderLowered = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
     	
-    	for (i=0; i<5; i++){
-    		for (j=0; j<5; j++){
+    	JButton buttonStart = new JButton("Start");
+    	JButton buttonEnd = new JButton("End");
+    	
+    	buttonStart.setEnabled(false);
+    	buttonEnd.setEnabled(false);
+    	
+    	result.add(buttonStart);
+    	
+    	for (int i=0; i<this.nbRows; i++){
+    		for (int j=1; j<this.nbLines; j = j+2){
     			
-    			JButton JButtonIsayTemp = new JButton("test");
-    			JButton JButtonIhearTemp = new JButton("test");
+    			HearSayCombo temp = new HearSayCombo(defaultText, result);
     			
-    			if(j/2!=0){
-    				//Border of the button
-        			JButtonIhearTemp.setBorder(BorderLowered);
-        			JButtonIsayTemp.setBorder(BorderLowered);
-        			
-        			JButtonIhearTemp.setBackground(new Color(15, 255, 255)); //Cyan
-        			JButtonIsayTemp.setBackground(new Color(255, 255, 15));	//Yellow
-        			
-        			
-    				this.contentGrid[i][j] = JButtonIsayTemp;
-    				if(i!=4){
-        				this.contentGrid[i+1][j-1] = JButtonIhearTemp;
-    				}
-    				
-    				alButton.add(JButtonIhearTemp);
-    				alButton.add(JButtonIsayTemp);
-    				
-        			result.add(JButtonIhearTemp);
-        			result.add(JButtonIsayTemp);
-        		
-    			}
-    			
-    			
-    			
-    			JButtonIsayTemp.addMouseListener(new MouseListener() {
+    			temp.getISayButton().addActionListener(new ActionListener() {
 					
 					@Override
-					public void mouseReleased(MouseEvent e) {
-					}
-					
-					@Override
-					public void mousePressed(MouseEvent e) {
-					}
-					
-					@Override
-					public void mouseExited(MouseEvent e) {
-					}
-					
-					@Override
-					public void mouseEntered(MouseEvent e) {
-					}
-					
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						
-						i = e.getComponent().getY()/e.getComponent().getHeight(); //Update i to the selected tile
-						j = e.getComponent().getX()/e.getComponent().getWidth(); //Update j to the selected tile
-						
-						String newContent = JOptionPane.showInputDialog("Text of this tile");
-						alButton.get(i+j).setText(newContent);
-						alButton.get(i+j).setText(newContent);
-						
-						//Clear the grid, removes every button and display the empty grid
-						result.removeAll();
-						result.setLayout(new GridLayout(5, 5));
-						revalidate();
-						repaint();
-						
-						
-						//TODO : remplis à nouveau la grille (s'arret)
-						for (i=0; i<5; i++){
-				    		for (j=0; j<5; j++){
-
-				    			System.out.println("i : " + i + " | j :" + j + " | contentGrid length : " + contentGrid.length);
-				    			
-				    			contentGrid[i][j]=alButton.get(i+j);
-				    			result.add(contentGrid[i][j]);
-				    		}
-						}
-						
+					public void actionPerformed(ActionEvent e) {
+						String newText = JOptionPane.showInputDialog("Enter the new text :");
+						temp.setText(newText);
 						
 					}
 				});
+				
     		}
     	}
+    	
+    	result.add(buttonEnd);
     	
     	result.setBorder(BorderTitledGrid);
     	return result;

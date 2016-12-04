@@ -4,8 +4,6 @@ import javax.swing.JFrame;
 
 import View.mainWindow;
 
-
-
 public class main {
 
 	public static void main(String[] args) {
