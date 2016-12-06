@@ -27,7 +27,7 @@ public class TestGrille {
 			tab = new LinkedHashMap<>(20);
 			taille = 20;
 		}else {
-			// taille de la Map (+1 première case)
+			// taille de la Map (+1 premiere case)
 			tab = new LinkedHashMap<>((nbMot/2)+1);
 			taille = nbMot;
 		}

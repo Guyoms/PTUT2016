@@ -5,7 +5,7 @@ import java.util.Collection;
 
 
 /*
- * Contient toutes les cases non rangées, sert principalement à mélanger sans perdre le contenu
+ * Contient toutes les cases non rangees, sert principalement a melanger sans perdre le contenu
  */
 
 public class Grid {
