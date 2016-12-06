@@ -1,0 +1,40 @@
+@startuml
+
+' definitions
+' -----------
+
+' package "View"
+class mainWindow
+class HearSayCombo
+' end package
+
+' package "Model"
+class TestGrille
+class Grid
+' end package
+
+' package "Controler"
+class main
+' end package
+
+' content
+' -------
+
+' main:
+main : void main(String)
+
+' Grid:
+
+' TestGrille:
+TestGrille : void main(String)
+
+' mainWindow:
+
+' HearSayCombo:
+HearSayCombo : void setText(String)
+HearSayCombo : void standardEdit(JPanel)
+HearSayCombo : void setColors(Color, Color)
+HearSayCombo : void setBorder(Border)
+HearSayCombo : JButton getISayButton()
+
+@enduml

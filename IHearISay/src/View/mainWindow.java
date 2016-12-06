@@ -55,7 +55,7 @@ public class mainWindow extends JFrame{
     	JPanel result = new JPanel(new BorderLayout());
     	
     	
-// Création de la grille 
+// Creation de la grille 
     	Border BorderTitledGrid = BorderFactory.createTitledBorder("Grid");
     	Border BorderTitledGrid2 = BorderFactory.createTitledBorder("Your choice");
     	
@@ -88,12 +88,12 @@ public class mainWindow extends JFrame{
     	
     	grille.add(buttonEnd);
     	grille.setBorder(BorderTitledGrid);
-//fin de création de la grille 
+//fin de creation de la grille 
 
-    	// Création des boutons de fonctionnalités
-    	JButton butCreer = new JButton("Créer");
-    	JButton butImport = new JButton("Importer");
-    	JButton butExport = new JButton("Exporter");
+    	// Creation des boutons de fonctionnalites
+    	JButton butCreer = new JButton("Create");
+    	JButton butImport = new JButton("Import");
+    	JButton butExport = new JButton("Export");
     	
     	//Ajout des Listener
     	butCreer.addActionListener(new ActionListener() {

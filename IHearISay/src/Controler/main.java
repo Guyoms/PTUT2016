@@ -3,7 +3,6 @@ package Controler;
 import javax.swing.JFrame;
 
 import View.mainWindow;
-import View.mainWindow2;
 
 public class main {
 
