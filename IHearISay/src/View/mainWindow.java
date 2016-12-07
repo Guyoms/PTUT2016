@@ -26,7 +26,7 @@ import java.awt.GridBagLayout;
 public class mainWindow extends JFrame{
 
 	private ArrayList<JButton> alButton = new ArrayList<JButton>();
-	private String defaultText = "test";
+	private String defaultText = "";
 	private int nbLines = 5;
 	private int nbRows = 7; // Must be an uneven number (number/2=1) !!!! or Interface goes weird
 	

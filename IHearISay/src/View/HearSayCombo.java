@@ -13,8 +13,8 @@ import javax.swing.border.Border;
 public class HearSayCombo {
 	private JButton IHearButton;
 	private JButton ISayButton;
-	private Color colorIHear = new Color(15, 255, 255); //Cyan
-	private Color colorISay = new Color(255, 255, 15); //Yellow
+	private Color colorIHear = new Color(204, 229, 255); //Light blue
+	private Color colorISay = new Color(255, 229, 204); //Light beige
 	private Border BorderButtons = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
 	private Dimension taille = new Dimension(90,90);
 	
