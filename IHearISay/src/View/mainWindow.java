@@ -16,10 +16,14 @@ import java.util.Collection;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.GridBagLayout;
 
 
@@ -51,7 +55,7 @@ public class mainWindow extends JFrame{
 	
 	private JPanel inside() {
     	JPanel grille = new JPanel(new GridLayout(this.nbLines, this.nbRows));
-    	JPanel boutons = new JPanel(new GridLayout(3,1));
+    	JPanel boutons = new JPanel(new GridLayout(5,1));
     	JPanel result = new JPanel(new BorderLayout());
     	
     	
@@ -90,10 +94,22 @@ public class mainWindow extends JFrame{
     	grille.setBorder(BorderTitledGrid);
 //fin de creation de la grille 
 
+    	//Dimension d = new Dimension(15, 110);
     	// Creation des boutons de fonctionnalites
     	JButton butCreer = new JButton("Create");
     	JButton butImport = new JButton("Import");
     	JButton butExport = new JButton("Export");
+    	JButton butImprimer = new JButton("Imprimer");
+    	JScrollPane list = new JScrollPane();
+ 
+    	/*
+    	butCreer.setPreferredSize(d);
+    	butImport.setPreferredSize(d);
+    	butExport.setPreferredSize(d);
+    	butImprimer.setPreferredSize(d);
+    	*/
+    	list.setPreferredSize(new Dimension(170,120));
+    	
     	
     	//Ajout des Listener
     	butCreer.addActionListener(new ActionListener() {
@@ -125,7 +141,9 @@ public class mainWindow extends JFrame{
     	boutons.add(butCreer);
     	boutons.add(butImport);
     	boutons.add(butExport);
-
+    	boutons.add(butImprimer);
+    	boutons.add(list);
+    	
     	boutons.setBorder(BorderTitledGrid2);
 
 
