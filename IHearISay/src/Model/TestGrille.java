@@ -18,7 +18,6 @@ public class TestGrille {
 		ArrayList<String> arL = new ArrayList<>();
 		LinkedHashMap<String, String> tab; 
 		
-		
 		System.out.println("Combien de mots voulez vous entrer ? Entrez 0 si vous ne savez pas.");
 		nbMot = sc.nextInt();
 		
@@ -36,6 +35,7 @@ public class TestGrille {
 		System.out.println("Premier mot : ");
 		prem = sc.next();
 		arL.add(prem);
+		
 		
 
 		
