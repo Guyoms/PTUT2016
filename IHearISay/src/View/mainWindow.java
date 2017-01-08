@@ -21,8 +21,8 @@ public class mainWindow extends JFrame{
 
 	private ArrayList<JButton> alButton = new ArrayList<JButton>();
 	private String defaultText = "";
-	private int nbLines = 10;
-	private int nbCol = 8; //MUST BE EVEN (nbRows/2 = 0)
+	private int nbLines = 5;
+	private int nbCol = 6; //MUST BE EVEN (nbRows/2 = 0)
 	private int nbButtons = this.nbLines*this.nbCol;
 	public  JPanel grille = new JPanel(new GridLayout(this.nbLines, this.nbCol));
 	
@@ -55,33 +55,9 @@ public class mainWindow extends JFrame{
     	Border BorderTitledGrid = BorderFactory.createTitledBorder("Grid");
     	Border BorderTitledGrid2 = BorderFactory.createTitledBorder("Your choice");
     	
-    	JButton buttonStart = new JButton("Start");
-    	JButton buttonEnd = new JButton("End");
     	
-    	buttonStart.setEnabled(false);
-    	buttonEnd.setEnabled(false);
     	
-    	if(this.nbButtons>0){
-    		grille.add(buttonStart);
-    	
-    		for (int i=0; i<this.nbButtons-2; i=i+2){
-    		
-    				HearSayCombo temp = new HearSayCombo(defaultText, grille);
-    				temp.getISayButton().addActionListener(new ActionListener() {
-					
-    					@Override
-    					public void actionPerformed(ActionEvent e) {
-    						String newText = JOptionPane.showInputDialog("Enter the new text :");
-    						temp.setText(newText);
-    						//TODO : ajouter dans la List
-						
-    					}
-    				});
-				
-    		
-    		}
-    		grille.add(buttonEnd);
-    	}
+    	fillGrid();
     	grille.setBorder(BorderTitledGrid);
 //fin de creation de la grille 
 
@@ -145,81 +121,117 @@ public class mainWindow extends JFrame{
     }
 	
 	public void actionBtnCreate(){
-		/*CreateGridWindow gridCreatorWindow = new CreateGridWindow("Creating a Grid");
-        gridCreatorWindow.setLocationRelativeTo(this);
-        gridCreatorWindow.setVisible(true);*/
-        
-		Object[] possibilities = {1,2,3,4,5,6,7,8,9,10};
-		int newNbLines = (int) JOptionPane.showInputDialog(
-		                    this,
-		                    "Number of lines :",
-		                    "Create Grid Input",
-		                    JOptionPane.PLAIN_MESSAGE,
-		                    null, possibilities,
-		                    2);
+       
+		Object[] options = {"Lines and Columns",
+        					"Enter the text directly"};
+		
+		int optionSelected = JOptionPane.showOptionDialog(this,
+														  "Choose a creation mode :",
+														  "Creation mode",
+														  JOptionPane.YES_NO_OPTION,
+														  JOptionPane.QUESTION_MESSAGE,
+														  null,     //do not use a custom Icon
+														  options,  //the titles of buttons
+														  options[0]); //default button title
+		
+		if(optionSelected==0){ //If Lines and Columns
+			Object[] possibilities = {1,2,3,4,5,6,7,8,9,10}; //Number of lines you can select, capped at 10 voluntarily
+			int newNbLines = (int) JOptionPane.showInputDialog(this,
+		                    							   	   "Number of lines :",
+		                    							   	   "Create Grid Input",
+		                    							   	   JOptionPane.PLAIN_MESSAGE,
+		                    							   	   null, possibilities,
+		                    							   	   1);
 
-		if (newNbLines > 0) {
-			Object[] possibilities2 = {4, 6, 8 , 10};
-		    this.nbLines=newNbLines;
-			int newNbCol = (int) JOptionPane.showInputDialog(
-			                    this,
-			                    "Number of Columns :",
-			                    "Create Grid Input",
-			                    JOptionPane.PLAIN_MESSAGE,
-			                    null, possibilities2,
-			                    2);
+			if (newNbLines > 0) { //If valid amount of line
+				Object[] possibilities2 = {4, 6, 8 , 10}; //Number of columns you can select, capped at 10 voluntarily, must be even(nbCol/2 = 0)
+				this.nbLines=newNbLines;
+				int newNbCol = (int) JOptionPane.showInputDialog(this,
+			                    							     "Number of Columns :",
+			                    							     "Create Grid Input",
+			                    							     JOptionPane.PLAIN_MESSAGE,
+			                    							     null, possibilities2,
+			                    							     4);
 
-			if (newNbCol > 0) {
+				if (newNbCol > 0) { //if valid amount of columns
 				
-			    this.nbCol=newNbCol;
-			    this.nbButtons=this.nbLines*this.nbCol;
-				this.grille.removeAll();
-				grille.setLayout(new GridLayout(this.nbLines, this.nbCol));
+			    	this.nbCol=newNbCol;
+			    	this.nbButtons=this.nbLines*this.nbCol;
+					this.grille.removeAll();
+					grille.setLayout(new GridLayout(this.nbLines, this.nbCol));
 				
-				System.out.println("nbLines = " + this.nbLines);
-				System.out.println("nbCol = " + this.nbCol);
+					fillGrid();
 				
-				if(this.nbButtons>0){
-					JButton buttonStart = new JButton("Start");
-			    	JButton buttonEnd = new JButton("End");
-			    	
-			    	buttonStart.setEnabled(false);
-			    	buttonEnd.setEnabled(false);
-			    	
-		    		grille.add(buttonStart);
-		    	
-		    		for (int i=0; i<this.nbButtons-2; i=i+2){
-		    		
-		    				HearSayCombo temp = new HearSayCombo(defaultText, grille);
-		    				System.out.println("uesch");
-		    				temp.getISayButton().addActionListener(new ActionListener() {
-							
-		    					@Override
-		    					public void actionPerformed(ActionEvent e) {
-		    						String newText = JOptionPane.showInputDialog("Enter the new text :");
-		    						temp.setText(newText);
-		    						//TODO : ajouter dans la List
-								
-		    					}
-		    				});
-						
-		    		
-		    		}
-		    		grille.add(buttonEnd);
-		    		grille.validate();
-		    		grille.repaint();
-		    	}
+				}
+
+				return;
+			}
+		}
+		else{ //If Enter the text directly
+			String userText = (String) JOptionPane.showInputDialog(this,
+				     "Enter the texts separated by a ';' :",
+				     "Enter your text",
+				     JOptionPane.PLAIN_MESSAGE,
+				     null,
+				     null,
+				     0);
+			int nbWord = userText.length() - userText.replace(";", "").length(); //
+			
+			int temp=(nbWord*2)+2;
+			
+			if(temp<=6){
+				this.nbLines=1;
+				this.nbCol=temp;
+			}
+			else{
+				this.nbLines=(temp/6)+1;
+				this.nbCol=6;
 			}
 			
+			this.nbButtons = nbWord*2;
+			System.out.println("______________");
+			System.out.println("temp :" + temp);
+			System.out.println("nbWord :" + nbWord);
+			System.out.println("nbLines :" + nbLines);
+			System.out.println("nbCol :" + nbCol);
+			//TODO : les syso affichent les bons chiffres, mais l'affichage est kassay
+			grille.setLayout(new GridLayout(nbLines, nbCol));
+			fillGrid();
 			
-			
-		    return;
 		}
-
-		//If you're here, the return value was null/empty.
-		System.out.println("C'est cassay");
-
-        
+	}
+	
+	public void fillGrid(){
+		grille.removeAll();
+		if(this.nbButtons>0){
+			JButton buttonStart = new JButton("Start");
+	    	JButton buttonEnd = new JButton("End");
+	    	
+	    	buttonStart.setEnabled(false);
+	    	buttonEnd.setEnabled(false);
+	    	
+    		grille.add(buttonStart);
+    	
+    		for (int i=0; i<this.nbButtons-2; i=i+2){
+    		
+    				HearSayCombo temp = new HearSayCombo(defaultText, grille);
+    				temp.getISayButton().addActionListener(new ActionListener() {
+					
+    					@Override
+    					public void actionPerformed(ActionEvent e) {
+    						String newText = JOptionPane.showInputDialog("Enter the new text :");
+    						temp.setText(newText);
+    						//TODO : ajouter dans la List
+						
+    					}
+    				});
+				
+    		
+    		}
+    		grille.add(buttonEnd);
+    		grille.validate();
+			grille.repaint();
+    	}
 	}
 
 }
