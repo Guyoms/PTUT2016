@@ -1,30 +1,20 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Collection;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-
-import java.awt.GridBagLayout;
 
 
 public class mainWindow extends JFrame{
@@ -32,7 +22,8 @@ public class mainWindow extends JFrame{
 	private ArrayList<JButton> alButton = new ArrayList<JButton>();
 	private String defaultText = "";
 	private int nbLines = 5;
-	private int nbRows = 7; // Must be an uneven number (number/2=1) !!!! or Interface goes weird
+	private int nbCol = 6; //MUST BE EVEN (nbRows/2 = 0)
+	private int nbButtons = this.nbLines*this.nbCol;
 	
 	public mainWindow(String titre) {
         super(titre);
@@ -40,7 +31,7 @@ public class mainWindow extends JFrame{
         super.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	    this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				if(JOptionPane.showConfirmDialog(null, "Quitter ?", "Confirmer", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+				if(JOptionPane.showConfirmDialog(null, "Quit ?", "Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 					System.exit(0);
 				}
 			}
@@ -54,7 +45,7 @@ public class mainWindow extends JFrame{
     }
 	
 	private JPanel inside() {
-    	JPanel grille = new JPanel(new GridLayout(this.nbLines, this.nbRows));
+    	JPanel grille = new JPanel(new GridLayout(this.nbLines, this.nbCol));
     	JPanel boutons = new JPanel(new GridLayout(5,1));
     	JPanel result = new JPanel(new BorderLayout());
     	
@@ -69,28 +60,27 @@ public class mainWindow extends JFrame{
     	buttonStart.setEnabled(false);
     	buttonEnd.setEnabled(false);
     	
-    	grille.add(buttonStart);
+    	if(this.nbButtons>0){
+    		grille.add(buttonStart);
     	
-    	for (int i=0; i<this.nbRows; i++){
-    		for (int j=1; j<this.nbLines; j = j+2){
-    			
-    			HearSayCombo temp = new HearSayCombo(defaultText, grille);
-    			
-    			temp.getISayButton().addActionListener(new ActionListener() {
+    		for (int i=0; i<this.nbButtons-2; i=i+2){
+    		
+    				HearSayCombo temp = new HearSayCombo(defaultText, grille);
+    				temp.getISayButton().addActionListener(new ActionListener() {
 					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						String newText = JOptionPane.showInputDialog("Enter the new text :");
-						temp.setText(newText);
-						//TODO : ajouter dans la List
+    					@Override
+    					public void actionPerformed(ActionEvent e) {
+    						String newText = JOptionPane.showInputDialog("Enter the new text :");
+    						temp.setText(newText);
+    						//TODO : ajouter dans la List
 						
-					}
-				});
+    					}
+    				});
 				
+    		
     		}
+    		grille.add(buttonEnd);
     	}
-    	
-    	grille.add(buttonEnd);
     	grille.setBorder(BorderTitledGrid);
 //fin de creation de la grille 
 
@@ -116,7 +106,7 @@ public class mainWindow extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(new JFrame(), "Not implemented yet...");
+				actionBtnCreate();
 				
 			}
 		});
@@ -153,6 +143,12 @@ public class mainWindow extends JFrame{
     	return result;
     }
 	
+	public void actionBtnCreate(){
+		CreateGridWindow gridCreatorWindow = new CreateGridWindow("Creating a Grid");
+        gridCreatorWindow.setLocationRelativeTo(this);
+        gridCreatorWindow.setVisible(true);
+        
+	}
 
 }
 
