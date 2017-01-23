@@ -45,8 +45,8 @@ public class HearSayCombo {
 	//Set all buttons to default settings for this app and add them to panelToAddButtons
 	public void standardEdit(JPanel panelToAddButtons){
 		
-		this.IHearButton.setBackground(colorIHear); //Cyan
-		this.ISayButton.setBackground(colorISay);	//Yellow
+		this.IHearButton.setBackground(colorIHear); 
+		this.ISayButton.setBackground(colorISay);	
 		
 		this.IHearButton.setEnabled(false);
 		

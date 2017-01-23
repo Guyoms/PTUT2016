@@ -175,27 +175,27 @@ public class mainWindow extends JFrame{
 				     null,
 				     null,
 				     0);
-			int nbWord = userText.length() - userText.replace(";", "").length(); //
+			int nbWord = userText.length() - userText.replace(";", "").length(); //number of word to put in the grid (= number of ';' in user's input)
 			
-			int temp=(nbWord*2)+2;
+			this.nbButtons=(nbWord*2)+2; //number of squares required in the grid
 			
-			if(temp<=6){
+			if(this.nbButtons<=6){			// 6 is a choice made by developpers in order to keep a good looking grid
 				this.nbLines=1;
-				this.nbCol=temp;
+				this.nbCol=this.nbButtons;
 			}
 			else{
-				this.nbLines=(temp/6)+1;
+				this.nbLines=(this.nbButtons/6)+1; //Might need so tweaks (ex if temp = 12, will have one empty line)
 				this.nbCol=6;
 			}
 			
-			this.nbButtons = nbWord*2;
 			System.out.println("______________");
-			System.out.println("temp :" + temp);
 			System.out.println("nbWord :" + nbWord);
+			System.out.println("nbButtons :" + nbButtons);
 			System.out.println("nbLines :" + nbLines);
 			System.out.println("nbCol :" + nbCol);
-			//TODO : les syso affichent les bons chiffres, mais l'affichage est kassay
+			//TODO : Réparer l'afficahge : le nombre de colones est correct d'après les syso, mais l'afficahge final ne le respecte pas forcément
 			grille.setLayout(new GridLayout(nbLines, nbCol));
+			//TODO : ajouter le text dans les boutons (idée ; tabText en param de HearSayCombo)
 			fillGrid();
 			
 		}
