@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,12 +20,12 @@ import javax.swing.border.Border;
 
 public class mainWindow extends JFrame{
 
-	private ArrayList<JButton> alButton = new ArrayList<JButton>();
-	private String defaultText = "";
-	private int nbLines = 5;
-	private int nbCol = 6; //MUST BE EVEN (nbRows/2 = 0)
-	private int nbButtons = this.nbLines*this.nbCol;
-	public  JPanel grille = new JPanel(new GridLayout(this.nbLines, this.nbCol));
+	private int 				nbLines   	= 5;
+	private int 				nbCol 	  	= 6; 						//MUST BE EVEN (nbRows/2 = 0)
+	private int 				nbButtons 	= this.nbLines*this.nbCol;
+	private ArrayList<String>   alWord 		= new ArrayList<String>	();
+	private String 				defaultText = ""; 						//Default text on all the buttons
+	public  JPanel 				grid 		= new JPanel(new GridLayout(this.nbLines, this.nbCol));
 	
 	public mainWindow(String titre) {
         super(titre);
@@ -47,7 +48,7 @@ public class mainWindow extends JFrame{
 	
 	private JPanel inside() {
 
-    	JPanel boutons = new JPanel(new GridLayout(5,1));
+    	JPanel boutons = new JPanel(new GridLayout(6,1));
     	JPanel result = new JPanel(new BorderLayout());
     	
     	
@@ -56,18 +57,20 @@ public class mainWindow extends JFrame{
     	Border BorderTitledGrid2 = BorderFactory.createTitledBorder("Your choice");
     	
     	
-    	
-    	fillGrid();
-    	grille.setBorder(BorderTitledGrid);
+    	this.alWord = new ArrayList<String>(); //Reset the ArrayList to have empty buttons
+    	fillGrid(alWord);
+    	grid.setBorder(BorderTitledGrid);
+    	//TODO : Try to adjust the size of the grid when modyfiying it's content in order to have good looking buttons 
 //fin de creation de la grille 
 
     	//Dimension d = new Dimension(15, 110);
     	// Creation des boutons de fonctionnalites
-    	JButton butCreer = new JButton("Create");
-    	JButton butImport = new JButton("Import");
-    	JButton butExport = new JButton("Export");
+    	JButton butCreer    = new JButton("Create");
+    	JButton butShuffle  = new JButton("Shuffle");
+    	JButton butImport   = new JButton("Import");
+    	JButton butExport   = new JButton("Export");
     	JButton butImprimer = new JButton("Imprimer");
-    	JScrollPane list = new JScrollPane();
+    	JScrollPane list    = new JScrollPane();
  
     	/*
     	butCreer.setPreferredSize(d);
@@ -88,6 +91,24 @@ public class mainWindow extends JFrame{
 			}
 		});
     	
+    	butShuffle.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				/*Fill the ArrayList with empty Strings to match the number of pair in the grid
+				 * Used to shuffle properly
+				*/
+				while(alWord.size()*2+2<nbButtons){
+					alWord.add("");
+				}
+				
+				shuffleWords();
+				fillGrid(alWord);
+				
+			}
+		});
+    	
     	butImport.addActionListener(new ActionListener() {
 			
 			@Override
@@ -96,6 +117,8 @@ public class mainWindow extends JFrame{
 				
 			}
 		});
+    	
+    	
     	butExport.addActionListener(new ActionListener() {
 			
 			@Override
@@ -106,6 +129,7 @@ public class mainWindow extends JFrame{
 		});
     	
     	boutons.add(butCreer);
+    	boutons.add(butShuffle);
     	boutons.add(butImport);
     	boutons.add(butExport);
     	boutons.add(butImprimer);
@@ -114,7 +138,7 @@ public class mainWindow extends JFrame{
     	boutons.setBorder(BorderTitledGrid2);
 
 
-    	result.add(grille, BorderLayout.CENTER);
+    	result.add(grid, BorderLayout.CENTER);
     	result.add(boutons, BorderLayout.EAST);
     	
     	return result;
@@ -145,7 +169,7 @@ public class mainWindow extends JFrame{
 
 			if (newNbLines > 0) { //If valid amount of line
 				Object[] possibilities2 = {4, 6, 8 , 10}; //Number of columns you can select, capped at 10 voluntarily, must be even(nbCol/2 = 0)
-				this.nbLines=newNbLines;
+				this.nbLines = newNbLines;
 				int newNbCol = (int) JOptionPane.showInputDialog(this,
 			                    							     "Number of Columns :",
 			                    							     "Create Grid Input",
@@ -157,19 +181,22 @@ public class mainWindow extends JFrame{
 				
 			    	this.nbCol=newNbCol;
 			    	this.nbButtons=this.nbLines*this.nbCol;
-					this.grille.removeAll();
-					grille.setLayout(new GridLayout(this.nbLines, this.nbCol));
+					this.grid.removeAll();
+					grid.setLayout(new GridLayout(this.nbLines, this.nbCol));
 				
-					fillGrid();
+					this.alWord = new ArrayList<String>(); //Reset the ArrayList to have empty buttons
+					fillGrid(this.alWord);
 				
 				}
 
 				return;
 			}
 		}
-		else{ //If Enter the text directly
+		else if(optionSelected==1){ //If Enter the text directly
 			String userText = (String) JOptionPane.showInputDialog(this,
-				     "Enter the texts separated by a ';' :",
+				     "Enter the texts separated by a ';'\n"
+				     + "In order to keep a clean display, it is recommanded to use the following amount of word :\n"
+				     + "",
 				     "Enter your text",
 				     JOptionPane.PLAIN_MESSAGE,
 				     null,
@@ -177,32 +204,27 @@ public class mainWindow extends JFrame{
 				     0);
 			int nbWord = userText.length() - userText.replace(";", "").length(); //number of word to put in the grid (= number of ';' in user's input)
 			
+			
+			//The following lines will splits the user input and add each word(separated by ';') to the ArrayList<String> alWord
+			String[] tempTabString = userText.split(";");
+			this.alWord = new ArrayList<String>();
+			for(String s : tempTabString){
+				this.alWord.add(s);
+			}
+			this.shuffleWords();
+			
+			
 			this.nbButtons=(nbWord*2)+2; //number of squares required in the grid
 			
-			if(this.nbButtons<=6){			// 6 is a choice made by developpers in order to keep a good looking grid
-				this.nbLines=1;
-				this.nbCol=this.nbButtons;
-			}
-			else{
-				this.nbLines=(this.nbButtons/6)+1; //Might need so tweaks (ex if temp = 12, will have one empty line)
-				this.nbCol=6;
-			}
-			
-			System.out.println("______________");
-			System.out.println("nbWord :" + nbWord);
-			System.out.println("nbButtons :" + nbButtons);
-			System.out.println("nbLines :" + nbLines);
-			System.out.println("nbCol :" + nbCol);
-			//TODO : Réparer l'afficahge : le nombre de colones est correct d'après les syso, mais l'afficahge final ne le respecte pas forcément
-			grille.setLayout(new GridLayout(nbLines, nbCol));
-			//TODO : ajouter le text dans les boutons (idée ; tabText en param de HearSayCombo)
-			fillGrid();
+			this.generateGrid(this.nbButtons);
+
 			
 		}
 	}
 	
-	public void fillGrid(){
-		grille.removeAll();
+	//Fill the panel 'grid' with buttons using this.nbButtons
+	public void fillGrid(ArrayList<String> alWord){
+		grid.removeAll();
 		if(this.nbButtons>0){
 			JButton buttonStart = new JButton("Start");
 	    	JButton buttonEnd = new JButton("End");
@@ -210,30 +232,91 @@ public class mainWindow extends JFrame{
 	    	buttonStart.setEnabled(false);
 	    	buttonEnd.setEnabled(false);
 	    	
-    		grille.add(buttonStart);
+    		grid.add(buttonStart);
     	
+    		String buttonText = this.defaultText;//variable containing next pair of button's content
+    		
     		for (int i=0; i<this.nbButtons-2; i=i+2){
     		
-    				HearSayCombo temp = new HearSayCombo(defaultText, grille);
+    				if(i/2<this.alWord.size() && this.alWord.size()!=0){buttonText = this.alWord.get(i/2);}
+    				else{buttonText = this.defaultText;}
+    				
+    			
+    				HearSayCombo temp = new HearSayCombo(buttonText, grid);
     				temp.getISayButton().addActionListener(new ActionListener() {
 					
     					@Override
-    					public void actionPerformed(ActionEvent e) {
+    					public void actionPerformed(ActionEvent e) { //Allows user to modify ISayButton's content by clicking on them
     						String newText = JOptionPane.showInputDialog("Enter the new text :");
-    						temp.setText(newText);
-    						//TODO : ajouter dans la List
+    						if(newText!=null){ //if user correctly entered a new String
+    							temp.setText(newText);
+    							alWord.add(newText);
+    						}
+    						
 						
     					}
     				});
 				
     		
     		}
-    		grille.add(buttonEnd);
-    		grille.validate();
-			grille.repaint();
+    		grid.add(buttonEnd);
+    		grid.validate();
+			grid.repaint();
     	}
 	}
-
+	
+	/* This method will generate a grid of appropriate size and updates values accordingly
+	 * In order to keep a clean display, we chose to have at least 4 columns :
+	 * 	- The number of buttons in the grid will always be even, meaning at least divisible by 2
+	 *  - In the case that it is only divisible by 2, we will need 2 extra buttons to make it divisible by 4
+	 *  - It was chosen that in said case, those extra buttons would be added to keep those 4 minimum columns
+	 * 
+	 * It would be possible to change this minimum number of columns and make that change doable by the user within the applicaton
+	 * with a proper implementation of a Strategy pattern
+	 */
+	public void generateGrid(int nbButtons){
+		if(this.nbButtons%4==0 ){	
+			this.nbLines=this.nbButtons/4;
+			this.nbCol=4;
+		}
+		else if((this.nbButtons%6)==0){	
+			this.nbLines=this.nbButtons/6;
+			this.nbCol=6;
+		}
+		else if(this.nbButtons<=8){
+			this.nbLines=1;
+			this.nbCol=this.nbButtons;
+		}
+		else if((this.nbButtons%8)==0){	
+			this.nbLines=this.nbButtons/8;
+			this.nbCol=6;
+		}
+		
+		
+		
+		else if(this.nbButtons%2==0){
+			this.nbButtons = this.nbButtons+2;
+			this.nbLines=this.nbButtons/4;
+			this.nbCol=4;
+		}
+		
+		
+		//Replace the else if on top of this line with this commented else if to change the behavior of this method
+		
+		/*
+		else if(this.nbButtons%2==0){
+			this.nbLines=this.nbButtons/2;
+			this.nbCol=2;
+		}*/
+		
+		grid.setLayout(new GridLayout(nbLines, nbCol));
+		fillGrid(alWord);
+	}
+	
+	//Shuffle the words in the ArrayList this.alWord
+	public void shuffleWords(){
+		Collections.shuffle(alWord);
+	}
 }
 
 

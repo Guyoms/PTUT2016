@@ -10,18 +10,25 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
+/*
+ * This class allows the creation of a pair of button I Hear/I Say
+ * The primary function of this class is allowing the programmer to
+ * modify the text of both button without having to call them each. 
+ */
 public class HearSayCombo {
+	private Dimension taille 	  = new Dimension(90,90);
 	private JButton IHearButton;
 	private JButton ISayButton;
-	private Color colorIHear = new Color(204, 229, 255); //Light blue
-	private Color colorISay = new Color(255, 229, 204); //Light beige
-	private Border BorderButtons = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
-	private Dimension taille = new Dimension(90,90);
+	private Border 	BorderButtons = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
+	private Color 	colorIHear 	  = new Color(204, 229, 255); //Light blue
+	private Color 	colorISay     = new Color(255, 229, 204); //Light beige
+	
+	
 	
 	//Should be used over default constructor, create empty buttons and add them to panelToAddButtons
 	public HearSayCombo(JPanel panelToAddButtons){
 		this.IHearButton = new JButton("");
-		this.ISayButton = new JButton("");
+		this.ISayButton  = new JButton("");
 		this.ISayButton.setPreferredSize(taille);
 		this.IHearButton.setPreferredSize(taille);
 		this.standardEdit(panelToAddButtons);
@@ -30,7 +37,7 @@ public class HearSayCombo {
 	//Standard constructor, create buttons with text textButtons, and add them to panelToAddButtons
 	public HearSayCombo(String textButtons, JPanel panelToAddButtons){
 		this.IHearButton = new JButton(textButtons);
-		this.ISayButton = new JButton(textButtons);
+		this.ISayButton  = new JButton(textButtons);
 		this.ISayButton.setPreferredSize(taille);
 		this.IHearButton.setPreferredSize(taille);
 		this.standardEdit(panelToAddButtons);
@@ -60,7 +67,7 @@ public class HearSayCombo {
 	//Set new colors for the buttons
 	public void setColors(Color colorIHear, Color colorISay){
 		this.colorIHear = colorIHear;
-		this.colorISay = colorISay;
+		this.colorISay  = colorISay;
 	}
 	
 	//Set a new border for both buttons
