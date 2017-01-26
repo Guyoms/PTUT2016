@@ -15,7 +15,7 @@ Bienvenue dans le manuel utilisateur de notre application. Vous trouverez ici de
 
 
 ====
-Remarque : Le design visuel de l'apllication n'est pas définitif et est amené à évoluer. Ici, la colonne beige représente la colonne "I Say" et la colonne bleue "I Hear".
+Remarque : Le design visuel de l'aplication n'est pas définitif et est amené à évoluer. Ici, la colonne beige représente la colonne "I Say" et la colonne bleue "I Hear".
 ====
 
 === Création de grille
