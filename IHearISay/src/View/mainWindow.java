@@ -273,6 +273,12 @@ public class mainWindow extends JFrame{
 	 * 
 	 * It would be possible to change this minimum number of columns and make that change doable by the user within the applicaton
 	 * with a proper implementation of a Strategy pattern
+	 * 
+	 * TODO : implement a strategy pattern whith several variations of generateGrid() :
+	 * 			-Minimum 2 columns 
+	 * 			-Minimum 4 columns
+	 * 			-Minimum 6 columns
+	 * 				...
 	 */
 	public void generateGrid(int nbButtons){
 		if(this.nbButtons%4==0 ){	
