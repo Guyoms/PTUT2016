@@ -1,5 +1,5 @@
 = Manuel utilisateur
-:Author:  Groupe [3]
+:Author:  Groupe [M]
 :doctitle: Manuel utilisateur "I HEAR I SAY"
 :toc: left
 :numbered:
@@ -10,66 +10,80 @@ Bienvenue dans le manuel utilisateur de notre application. Vous trouverez ici de
 
 
 
+
 == Fonctionnalités
+
+
+====
+Remarque : Le design visuel de l'apllication n'est pas définitif et est amené à évoluer. Ici, la colonne beige représente la colonne "I Say" et la colonne bleue "I Hear".
+====
+
 === Création de grille
 
 Lorsque vous procéderez à la création d'une grille, vous aurez plusieurs options, à savoir : 
 
-* La création d'une grille en entrant une liste de mot
-* La création d'une grille par choix d'une taille de grille
+* La création d'une grille en entrant une liste de mot,
+* La création d'une grille par choix d'une taille de grille.
 
-Afin que l'utilisation de ces fonctionnalités soient le plus explicite possible nous allons les décrire ci-dessous.
+Afin que l'utilisation de ces fonctionnalités soit le plus explicite possible nous allons les décrire ci-dessous.
 Tout d'abord il faudra sélectionner l'option "create" : 
 
-image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\appliVidev2.PNG[]
+image::Images_documentation\appliVidev2.PNG[]
 
 ==== Liste de mot
 
-//Screens
-
 Lorsque ce mode est sélectionné : 
+
+image::Images_documentation\choix.PNG[]
+
+
+Il suffit d'entrer les mots à la suite séparé d'un point virgule. Pour une meilleure ergonomie le nombre minimum de mots doit être de 7 (ce qui est entre deux points virgules est considéré comme un seul et même mot).
+
+image::Images_documentation\CreateGrilleByWords.PNG[]
+
+En validant, la grille est créée : 
+
+image::Images_documentation\GrilleRemplieGénérée.PNG[]
 
 
 ==== Choix d'une taille
 
 Lorsque ce mode est sélectionné :
 
-image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\appliColonne.PNG[]
+image::Images_documentation\appliColonne.PNG[]
 
-Il faudra choisir le nombre de colonne et le nombre de ligne comme ceci :
+Il faudra choisir le nombre de colonnes et le nombre de lignes comme ceci :
 
 
-image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\columns.PNG[]
-image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\lines.PNG[]
+image::Images_documentation\columns.PNG[]
+image::Images_documentation\lines.PNG[]
 
-C'est fait, la grille est générée : 
+La grille est générée : 
 
-image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\appliVide.PNG[]
+image::Images_documentation\appliVide.PNG[]
+
+Il ne reste plus qu'à la remplir en cliquant sur les cases. (cf 2.2)
 
 === Modification des champs
-La modification des champs se fait d'une manière très simple. Il suffit de cliquer sur la case désirée et ainsi de modifier le texte. Il n'est cependant pas possible de modifier un mot de la colone "I Hear". Le mot que vous avez modifié dans la colone "I Say" sera automatiquement modifié dans la colone "I Hear". 
+La modification des champs se fait d'une manière très simple. Il suffit de cliquer sur la case désirée et ainsi de modifier le texte.
 
 Ici, nous voulons modifier "Good Morning" en "Hey !" :
 
-image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\GrilleRemplie.PNG[]
+image::Images_documentation\GrilleRemplie.PNG[]
 
-Après le clique sur la case à modifier : 
+Après avoir cliqué sur la case à modifier : 
 
 
-image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\ModifDunMot.PNG[]
+image::Images_documentation\ModifDunMot.PNG[]
 
 On valide en appuyant sur "ok", la modification est effectuée : 
 
 
-image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\GrilleAvecMotModifié.PNG[]
+image::Images_documentation\GrilleAvecMotModifié.PNG[]
 
-
-Il n'est cependant pas possible de modifier un mot de la colone "I Hear". Le mot que vous avez modifié dans la colone "I Say" sera automatiquement modifié dans la colone "I Hear". 
-
-
-
+====
+Remarque : Il n'est cependant pas possible de modifier un mot de la colone "I Hear". Le mot que vous avez modifié dans la colone "I Say" sera automatiquement modifié dans la colone "I Hear". 
 
 
 
 
-//Screens
