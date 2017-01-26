@@ -1,0 +1,75 @@
+= Manuel utilisateur
+:Author:  Groupe [3]
+:doctitle: Manuel utilisateur "I HEAR I SAY"
+:toc: left
+:numbered:
+
+
+== Introduction
+Bienvenue dans le manuel utilisateur de notre application. Vous trouverez ici des explications et des exemples sur les différentes fonctionnalités disponibles.
+
+
+
+== Fonctionnalités
+=== Création de grille
+
+Lorsque vous procéderez à la création d'une grille, vous aurez plusieurs options, à savoir : 
+
+* La création d'une grille en entrant une liste de mot
+* La création d'une grille par choix d'une taille de grille
+
+Afin que l'utilisation de ces fonctionnalités soient le plus explicite possible nous allons les décrire ci-dessous.
+Tout d'abord il faudra sélectionner l'option "create" : 
+
+image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\appliVidev2.PNG[]
+
+==== Liste de mot
+
+//Screens
+
+Lorsque ce mode est sélectionné : 
+
+
+==== Choix d'une taille
+
+Lorsque ce mode est sélectionné :
+
+image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\appliColonne.PNG[]
+
+Il faudra choisir le nombre de colonne et le nombre de ligne comme ceci :
+
+
+image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\columns.PNG[]
+image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\lines.PNG[]
+
+C'est fait, la grille est générée : 
+
+image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\appliVide.PNG[]
+
+=== Modification des champs
+La modification des champs se fait d'une manière très simple. Il suffit de cliquer sur la case désirée et ainsi de modifier le texte. Il n'est cependant pas possible de modifier un mot de la colone "I Hear". Le mot que vous avez modifié dans la colone "I Say" sera automatiquement modifié dans la colone "I Hear". 
+
+Ici, nous voulons modifier "Good Morning" en "Hey !" :
+
+image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\GrilleRemplie.PNG[]
+
+Après le clique sur la case à modifier : 
+
+
+image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\ModifDunMot.PNG[]
+
+On valide en appuyant sur "ok", la modification est effectuée : 
+
+
+image::..\..\GitHub\PTUT2016\PTUT2016\PTUT2016\IHearISay\Documentation\Images_documentation\GrilleAvecMotModifié.PNG[]
+
+
+Il n'est cependant pas possible de modifier un mot de la colone "I Hear". Le mot que vous avez modifié dans la colone "I Say" sera automatiquement modifié dans la colone "I Hear". 
+
+
+
+
+
+
+
+//Screens

@@ -194,9 +194,9 @@ public class mainWindow extends JFrame{
 		}
 		else if(optionSelected==1){ //If Enter the text directly
 			String userText = (String) JOptionPane.showInputDialog(this,
-				     "Enter the texts separated by a ';'\n"
-				     + "In order to keep a clean display, it is recommanded to use the following amount of word :\n"
-				     + "",
+				     "Enter the texts separated by a ';'.\n"
+				     + "In order to keep a clean display,\nit is recommanded to use a minimum of 7 words :\n"
+				     + "\n",
 				     "Enter your text",
 				     JOptionPane.PLAIN_MESSAGE,
 				     null,
