@@ -17,15 +17,24 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 
+import Model.GenerateGridBehavior;
+import Model.GenerateGridBehavior10Columns;
+import Model.GenerateGridBehavior2Columns;
+import Model.GenerateGridBehavior4Columns;
+import Model.GenerateGridBehavior6Columns;
+import Model.GenerateGridBehavior8Columns;
+
 
 public class mainWindow extends JFrame{
 
-	private int 				nbLines   	= 5;
-	private int 				nbCol 	  	= 6; 						//MUST BE EVEN (nbRows/2 = 0)
-	private int 				nbButtons 	= this.nbLines*this.nbCol;
-	private ArrayList<String>   alWord 		= new ArrayList<String>	();
-	private String 				defaultText = ""; 						//Default text on all the buttons
-	public  JPanel 				grid 		= new JPanel(new GridLayout(this.nbLines, this.nbCol));
+	private int 				 nbLines   	= 5;
+	private int 				 nbCol 	  	= 6; 						//MUST BE EVEN (nbRows/2 = 0)
+	private int 				 nbButtons 	= this.nbLines*this.nbCol;
+	private ArrayList<String>    alWord 		= new ArrayList<String>	();
+	private String 				 defaultText = ""; 						//Default text on all the buttons
+	public  JPanel 				 grid 		= new JPanel(new GridLayout(this.nbLines, this.nbCol));
+	
+	private GenerateGridBehavior generateGridBehavior;
 	
 	public mainWindow(String titre) {
         super(titre);
@@ -202,11 +211,13 @@ public class mainWindow extends JFrame{
 				     null,
 				     null,
 				     0);
-			int nbWord = userText.length() - userText.replace(";", "").length(); //number of word to put in the grid (= number of ';' in user's input)
+			
+			//int nbWord = userText.length() - userText.replace(";", "").length(); //number of word to put in the grid (= number of ';' in user's input)
 			
 			
 			//The following lines will splits the user input and add each word(separated by ';') to the ArrayList<String> alWord
 			String[] tempTabString = userText.split(";");
+			int nbWord = tempTabString.length;
 			this.alWord = new ArrayList<String>();
 			for(String s : tempTabString){
 				this.alWord.add(s);
@@ -216,9 +227,34 @@ public class mainWindow extends JFrame{
 			
 			this.nbButtons=(nbWord*2)+2; //number of squares required in the grid
 			
-			this.generateGrid(this.nbButtons);
-
+			Object[] possibilities = {2,4,6,8,10}; //Number of lines you can select, capped at 10 voluntarily
+			int newNbCol = (int) JOptionPane.showInputDialog(this,
+			                    							 "You have entered " + nbWord +" words. How many columns do you want in the final grid ? :",
+			                    							 "Create Grid Input",
+			                    							 JOptionPane.PLAIN_MESSAGE,
+			                    							 null, possibilities,
+			                    							 1);
 			
+			System.out.println("-----------BEFORE------------");
+			System.out.println("nbButtons : "+ this.nbButtons);
+			System.out.println("nbLines : "+ this.nbLines);
+			System.out.println("nbCol : "+ this.nbCol);
+			
+			
+			if(newNbCol == 2){this.generateGridBehavior = new GenerateGridBehavior2Columns();}				
+			if(newNbCol == 4){this.generateGridBehavior = new GenerateGridBehavior4Columns();}
+			if(newNbCol == 6){this.generateGridBehavior = new GenerateGridBehavior6Columns();}
+			if(newNbCol == 8){this.generateGridBehavior = new GenerateGridBehavior8Columns();}
+			if(newNbCol == 10){this.generateGridBehavior = new GenerateGridBehavior10Columns();}
+				
+			this.generateGrid();
+			
+			System.out.println("-----------AFTER------------");
+			generateGridBehavior.toPrint();
+			System.out.println("nbButtons : "+ this.nbButtons);
+			System.out.println("nbLines : "+ this.nbLines);
+			System.out.println("nbCol : "+ this.nbCol);
+
 		}
 	}
 	
@@ -265,59 +301,23 @@ public class mainWindow extends JFrame{
     	}
 	}
 	
-	/* This method will generate a grid of appropriate size and updates values accordingly
-	 * In order to keep a clean display, we chose to have at least 4 columns :
-	 * 	- The number of buttons in the grid will always be even, meaning at least divisible by 2
-	 *  - In the case that it is only divisible by 2, we will need 2 extra buttons to make it divisible by 4
-	 *  - It was chosen that in said case, those extra buttons would be added to keep those 4 minimum columns
+	/*
+	 * The following method will update the grid with the selected GenerateGridBehavior.
+	 * The result will wary depending on the number of words entered by the user and the behavior selected.
+	 * Note that those behaviors follow a Strategy pattern.
 	 * 
-	 * It would be possible to change this minimum number of columns and make that change doable by the user within the applicaton
-	 * with a proper implementation of a Strategy pattern
-	 * 
-	 * TODO : implement a strategy pattern whith several variations of generateGrid() :
-	 * 			-Minimum 2 columns 
-	 * 			-Minimum 4 columns
-	 * 			-Minimum 6 columns
-	 * 				...
+	 * /!\ In order to use those classes, if is extremely important to use the generateNbButtons(nbButtons) first, then use the other methods
 	 */
-	public void generateGrid(int nbButtons){
-		if(this.nbButtons%4==0 ){	
-			this.nbLines=this.nbButtons/4;
-			this.nbCol=4;
-		}
-		else if((this.nbButtons%6)==0){	
-			this.nbLines=this.nbButtons/6;
-			this.nbCol=6;
-		}
-		else if(this.nbButtons<=8){
-			this.nbLines=1;
-			this.nbCol=this.nbButtons;
-		}
-		else if((this.nbButtons%8)==0){	
-			this.nbLines=this.nbButtons/8;
-			this.nbCol=6;
-		}
-		
-		
-		
-		else if(this.nbButtons%2==0){
-			this.nbButtons = this.nbButtons+2;
-			this.nbLines=this.nbButtons/4;
-			this.nbCol=4;
-		}
-		
-		
-		//Replace the else if on top of this line with this commented else if to change the behavior of this method
-		
-		/*
-		else if(this.nbButtons%2==0){
-			this.nbLines=this.nbButtons/2;
-			this.nbCol=2;
-		}*/
-		
-		grid.setLayout(new GridLayout(nbLines, nbCol));
+	
+	public void generateGrid(){
+		this.nbButtons = this.generateGridBehavior.generateNbButtons(this.nbButtons);
+		this.nbLines = this.generateGridBehavior.generateNbLines(this.nbButtons);
+		this.nbCol = this.generateGridBehavior.generateNbColumns();
+		grid.setLayout(new GridLayout(this.nbLines, this.nbCol));
 		fillGrid(alWord);
 	}
+	
+	
 	
 	//Shuffle the words in the ArrayList this.alWord
 	public void shuffleWords(){
