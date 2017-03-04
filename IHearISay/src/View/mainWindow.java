@@ -7,10 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,7 +21,10 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.Border;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
+import Model.BasicCSVHandler;
+import Model.CSVHandler;
 import Model.GenerateGridBehavior;
 import Model.GenerateGridBehavior10Columns;
 import Model.GenerateGridBehavior2Columns;
@@ -38,6 +43,7 @@ public class mainWindow extends JFrame{
 	public  JPanel 				 grid 		= new JPanel(new GridLayout(this.nbLines, this.nbCol));
 	
 	private GenerateGridBehavior generateGridBehavior;
+	private CSVHandler			 csvHandler;
 	
 	public mainWindow(String titre) {
         super(titre);
@@ -76,7 +82,7 @@ public class mainWindow extends JFrame{
     	JPanel result = new JPanel(new BorderLayout());
     	
     	
-// Creation de la grille 
+// Creation of the grid 
     	Border BorderTitledGrid = BorderFactory.createTitledBorder("Grid");
     	Border BorderTitledGrid2 = BorderFactory.createTitledBorder("Your choice");
     	
@@ -85,7 +91,7 @@ public class mainWindow extends JFrame{
     	fillGrid(alWord);
     	grid.setBorder(BorderTitledGrid);
     	//TODO : Try to adjust the size of the grid when modyfiying it's content in order to have good looking buttons 
-//fin de creation de la grille 
+//End of the creation of the grille 
 
     	//Dimension d = new Dimension(15, 110);
     	// Creation des boutons de fonctionnalites
@@ -105,7 +111,7 @@ public class mainWindow extends JFrame{
     	list.setPreferredSize(new Dimension(170,120));
     	
     	
-    	//Ajout des Listener
+    	//Adding the Listeners
     	butCreer.addActionListener(new ActionListener() {
 			
 			@Override
@@ -147,7 +153,7 @@ public class mainWindow extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(new JFrame(), "Not implemented yet...");
+				actionBtnExport();
 				
 			}
 		});
@@ -250,25 +256,14 @@ public class mainWindow extends JFrame{
 			                    							 null, possibilities,
 			                    							 1);
 			
-			System.out.println("-----------BEFORE------------");
-			System.out.println("nbButtons : "+ this.nbButtons);
-			System.out.println("nbLines : "+ this.nbLines);
-			System.out.println("nbCol : "+ this.nbCol);
-			
-			
+			//Assign the correct behavior depending on user's selection
 			if(newNbCol == 2){this.generateGridBehavior = new GenerateGridBehavior2Columns();}				
 			if(newNbCol == 4){this.generateGridBehavior = new GenerateGridBehavior4Columns();}
 			if(newNbCol == 6){this.generateGridBehavior = new GenerateGridBehavior6Columns();}
 			if(newNbCol == 8){this.generateGridBehavior = new GenerateGridBehavior8Columns();}
 			if(newNbCol == 10){this.generateGridBehavior = new GenerateGridBehavior10Columns();}
 				
-			this.generateGrid();
-			
-			System.out.println("-----------AFTER------------");
-			generateGridBehavior.toPrint();
-			System.out.println("nbButtons : "+ this.nbButtons);
-			System.out.println("nbLines : "+ this.nbLines);
-			System.out.println("nbCol : "+ this.nbCol);
+			this.generateGrid();			
 
 		}
 	}
@@ -337,6 +332,39 @@ public class mainWindow extends JFrame{
 	//Shuffle the words in the ArrayList this.alWord
 	public void shuffleWords(){
 		Collections.shuffle(alWord);
+	}
+	
+	public void actionBtnExport(){
+		this.csvHandler = new BasicCSVHandler();
+		JFileChooser chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV", "csv");
+		chooser.setFileFilter(filter);
+		
+		File destinationFile = null;
+		
+		//This value store whether or not user saved properly
+		int didUserSaved = chooser.showSaveDialog(this);
+		
+		//if user saved correctly
+		if (didUserSaved == JFileChooser.APPROVE_OPTION) {
+			//if user's selected file is not a csv file, "force" csv extension
+			if (!chooser.getSelectedFile().getName().contains(".csv")) {
+				destinationFile = new File(chooser.getSelectedFile().getPath().concat(".csv"));
+
+			} else {
+				destinationFile = new File(chooser.getSelectedFile().getPath());
+			}
+			//if the grid was successfully exported, notify the user 
+			if (this.csvHandler.exportGridToCsv(destinationFile, this.alWord)) {
+				JOptionPane.showMessageDialog(this,
+											  "The grid has been successfully exported",
+											  "Export successful",
+											  JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+		
+		this.csvHandler.exportGridToCsv(destinationFile, this.alWord);
+		
 	}
 }
 
