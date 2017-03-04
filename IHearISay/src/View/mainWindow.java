@@ -15,6 +15,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.Border;
 
 import Model.GenerateGridBehavior;
@@ -38,6 +41,18 @@ public class mainWindow extends JFrame{
 	
 	public mainWindow(String titre) {
         super(titre);
+        
+        //Interface graphique
+		try {
+		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		            break;
+		        }
+		    }
+		} catch (Exception e) {
+			System.out.println(e);
+		}
         
         super.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	    this.addWindowListener(new WindowAdapter() {
