@@ -17,13 +17,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import Model.BasicCSVHandler;
 import Model.CSVHandler;
 import Model.CSVHandler10Columns;
 import Model.CSVHandler2Columns;
@@ -375,6 +372,7 @@ public class mainWindow extends JFrame{
 			}
 		}
 		
+		this.csvHandler.updateNbCol();
 		this.csvHandler.exportGridToCsv(destinationFile, this.alWord);
 		
 	}

@@ -8,4 +8,6 @@ public interface CSVHandler {
 	
 	public boolean exportGridToCsv(File file, ArrayList<String> alString);
 	
+	public void updateNbCol();
+	
 }
