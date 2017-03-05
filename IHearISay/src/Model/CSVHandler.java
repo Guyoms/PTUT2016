@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public interface CSVHandler {
 	
+	
 	public boolean exportGridToCsv(File file, ArrayList<String> alString);
 	
 }

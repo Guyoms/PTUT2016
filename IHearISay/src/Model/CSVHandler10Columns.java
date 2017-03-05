@@ -8,17 +8,21 @@ import java.util.ArrayList;
 
 public class CSVHandler10Columns implements CSVHandler{
 	private int nbColumns = 10;
+	
+	boolean exportSuccesful = true;
+	FileWriter myFileWriter = null;
+	BufferedWriter myBufferedWriter = null;
+	
+	
+	//Copy alString, but with each word doubled
+	
+	ArrayList<String> alStringDoubled = new ArrayList<String>();
+	int iteratorAlStringDoubled = 0;
 
 	@Override
 	public boolean exportGridToCsv(File file, ArrayList<String> alString) {
-		boolean exportSuccesful = true;
-		FileWriter myFileWriter = null;
-		BufferedWriter myBufferedWriter = null;
-		
-		//Copy alString, but with each word doubled
-		
-		ArrayList<String> alStringDoubled = new ArrayList<String>();
-		int iteratorAlStringDoubled = 0;
+
+
 		for (int i=0; i<alString.size(); i++){
 			alStringDoubled.add(alString.get(i));
 			alStringDoubled.add(alString.get(i));
