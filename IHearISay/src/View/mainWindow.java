@@ -25,6 +25,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Model.BasicCSVHandler;
 import Model.CSVHandler;
+import Model.CSVHandler10Columns;
+import Model.CSVHandler2Columns;
+import Model.CSVHandler4Columns;
+import Model.CSVHandler6Columns;
+import Model.CSVHandler8Columns;
 import Model.GenerateGridBehavior;
 import Model.GenerateGridBehavior10Columns;
 import Model.GenerateGridBehavior2Columns;
@@ -257,10 +262,10 @@ public class mainWindow extends JFrame{
 			                    							 1);
 			
 			//Assign the correct behavior depending on user's selection
-			if(newNbCol == 2){this.generateGridBehavior = new GenerateGridBehavior2Columns();}				
-			if(newNbCol == 4){this.generateGridBehavior = new GenerateGridBehavior4Columns();}
-			if(newNbCol == 6){this.generateGridBehavior = new GenerateGridBehavior6Columns();}
-			if(newNbCol == 8){this.generateGridBehavior = new GenerateGridBehavior8Columns();}
+			if(newNbCol == 2) {this.generateGridBehavior = new GenerateGridBehavior2Columns();}				
+			if(newNbCol == 4) {this.generateGridBehavior = new GenerateGridBehavior4Columns();}
+			if(newNbCol == 6) {this.generateGridBehavior = new GenerateGridBehavior6Columns();}
+			if(newNbCol == 8) {this.generateGridBehavior = new GenerateGridBehavior8Columns();}
 			if(newNbCol == 10){this.generateGridBehavior = new GenerateGridBehavior10Columns();}
 				
 			this.generateGrid();			
@@ -335,7 +340,14 @@ public class mainWindow extends JFrame{
 	}
 	
 	public void actionBtnExport(){
-		this.csvHandler = new BasicCSVHandler();
+		
+		if(this.nbCol == 2) {this.csvHandler = new CSVHandler2Columns();}				
+		if(this.nbCol == 4) {this.csvHandler = new CSVHandler4Columns();}	
+		if(this.nbCol == 6) {this.csvHandler = new CSVHandler6Columns();}	
+		if(this.nbCol == 8) {this.csvHandler = new CSVHandler8Columns();}	
+		if(this.nbCol == 10){this.csvHandler = new CSVHandler10Columns();}	
+		
+		
 		JFileChooser chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV", "csv");
 		chooser.setFileFilter(filter);
