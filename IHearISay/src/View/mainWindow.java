@@ -39,7 +39,7 @@ public class mainWindow extends JFrame{
 	private int 				 nbCol 	  	= 6; 						//MUST BE EVEN (nbRows/2 = 0)
 	private int 				 nbButtons 	= this.nbLines*this.nbCol;
 	private ArrayList<String>    alWord 		= new ArrayList<String>	();
-	private String 				 defaultText = ""; 						//Default text on all the buttons
+	private String 				 defaultText = " "; 						//Default text on all the buttons
 	public  JPanel 				 grid 		= new JPanel(new GridLayout(this.nbLines, this.nbCol));
 	
 	private GenerateGridBehavior generateGridBehavior;

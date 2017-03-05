@@ -16,6 +16,15 @@ public class BasicCSVHandler implements CSVHandler{
 		FileWriter myFileWriter = null;
 		BufferedWriter myBufferedWriter = null;
 		
+		//Copy alString, but with each word doubled
+		
+		ArrayList<String> alStringDoubled = new ArrayList<String>();
+		int iteratorAlStringDoubled = 0;
+		for (int i=0; i<alString.size(); i++){
+			alStringDoubled.add(alString.get(i));
+			alStringDoubled.add(alString.get(i));
+		}
+		
 		try{
 			myFileWriter = new FileWriter(file.getAbsolutePath());
 			myBufferedWriter = new BufferedWriter(myFileWriter);
@@ -23,20 +32,46 @@ public class BasicCSVHandler implements CSVHandler{
 			myBufferedWriter.append("I hear;I say;I hear;I say");
 			myBufferedWriter.newLine();
 			
+			//Number of word left to write on the csv
+			int remainingNbWordToWrite = alStringDoubled.size();
+			
 			//Will copy alString in the csv to a 4 rows grid
-			for(int i=0; i<alString.size(); i+=2){
+			for(int i=0; i<alStringDoubled.size()+2; i+=4){	
+				int remainingNbWordOnLine = 4;
+				String nextLineToWrite = "";
 					
-				int remainingNbWordToWrite = alString.size()-i;
-				String nextLineToWrite = null;
-				if(remainingNbWordToWrite>=2){
-					//Each word needs to be written twice since to represent the I hear/I say pair (which is not the case in alString)
-					nextLineToWrite = alString.get(i)+ ";" + alString.get(i)+ ";" + alString.get(i+1)+ ";" + alString.get(i+1);
+				//if at the begining of the list
+				if(i==0){
+					nextLineToWrite = "Start;";
+					remainingNbWordOnLine--;
 				}
-				else{
-					for (int j=0; j<remainingNbWordToWrite; j++){
-						nextLineToWrite += alString.get(j)+ ";";
+				
+				//if at the end of the list
+				else if (remainingNbWordToWrite==0 && remainingNbWordOnLine==1) {
+					nextLineToWrite += "End";
+					remainingNbWordOnLine--;
+					
+				}
+				
+				while(remainingNbWordOnLine>0){
+					if (remainingNbWordToWrite==0 && remainingNbWordOnLine==1) {
+						nextLineToWrite += "End";
+						remainingNbWordOnLine--;
+						
 					}
+					//If there is still some word to write, write them
+					if(remainingNbWordToWrite>0){
+						nextLineToWrite += alStringDoubled.get(iteratorAlStringDoubled) + ";";
+						iteratorAlStringDoubled++;
+						remainingNbWordToWrite--;
+					}
+					//else add blank text (the empty space seems to be required)
+					else{
+						nextLineToWrite += " ;";
+					}
+					remainingNbWordOnLine--;
 				}
+
 				myBufferedWriter.append(nextLineToWrite);
 				myBufferedWriter.newLine();
 				
