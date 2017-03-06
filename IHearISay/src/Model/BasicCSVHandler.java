@@ -1,10 +1,14 @@
 package Model;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 //This class is just the basic structure of the csvHandler and ultimately not desired in the final program. Consider it as a sketch rather than a functioning class.
 //Several variation will be needed with specified numbers of columns to import/export (cf : gridGenerator)
@@ -123,6 +127,71 @@ public class BasicCSVHandler implements CSVHandler{
 	@Override
 	public void updateNbCol() {
 		return;
+	}
+
+	/**
+	 *	Importation method for the companies
+	 */
+	@Override
+	public ArrayList<String> importCsv(File file) {
+			FileReader monFichier = null;
+			BufferedReader tampon = null;
+			ArrayList<String> aLImport = new ArrayList<String>();
+			String[] tabString ;
+			int taille;
+		
+			try {
+				// file path
+				monFichier = new FileReader(file.getAbsolutePath());
+				tampon = new BufferedReader(monFichier);
+
+				// read a line of the file .csv
+				String ligneTemp = tampon.readLine();
+				// read the 2nd line to avoid the column's title
+				ligneTemp = tampon.readLine();
+				
+				
+						// faire la gestion des erreurs 
+						/*JOptionPane.showMessageDialog(this, "Le fichier .csv n'est pas valide", "Erreur !",
+									JOptionPane.ERROR_MESSAGE);*/
+				
+				// read all the lines one by one and split them to keep the
+				// structure's name
+				while (ligneTemp != null) {					
+					tabString = ligneTemp.split(";");
+					
+					taille = tabString.length;
+					for (int i = 0; i < taille; i+=2) {
+						
+						if((!(i == 0)) || i ==  taille - 1){
+							aLImport.add(tabString[i]);
+						}
+						
+					}
+					ligneTemp = tampon.readLine();
+				}
+
+			} catch (IOException exception) {
+				exception.printStackTrace();
+				return null;
+			} finally {
+				try {
+					tampon.close();
+					monFichier.close();
+				} catch (IOException exception1) {
+					exception1.printStackTrace();
+					return null;
+				}
+			}
+		return aLImport;	
+	}
+
+	@Override
+	public int getNbColCsv(File file) {
+		
+		int[] borne = new int[this.nbColumns];
+		
+		return borne.length;
 	}
 		
 }

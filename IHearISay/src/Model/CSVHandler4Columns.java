@@ -14,5 +14,12 @@ public class CSVHandler4Columns extends BasicCSVHandler implements CSVHandler{
 	public void updateNbCol(){
 		super.setNbColumns(newNbCol);
 	}
+	
+	@Override
+	public ArrayList<String> importCsv(File file) {
+		// TODO Auto-generated method stub
+		return super.importCsv(file);
+	}
+
 
 }

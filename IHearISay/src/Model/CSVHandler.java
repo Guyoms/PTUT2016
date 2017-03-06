@@ -10,4 +10,8 @@ public interface CSVHandler {
 	
 	public void updateNbCol();
 	
+	public ArrayList<String> importCsv(File file);
+	
+	
+	public int getNbColCsv(File file);
 }

@@ -15,4 +15,10 @@ public class CSVHandler6Columns extends BasicCSVHandler implements CSVHandler{
 			super.setNbColumns(newNbCol);
 		}
 
+		@Override
+		public ArrayList<String> importCsv(File file) {
+			// TODO Auto-generated method stub
+			return super.importCsv(file);
+		}
+
 }

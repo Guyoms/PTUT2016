@@ -21,6 +21,8 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import Model.BasicCSVHandler;
 import Model.CSVHandler;
 import Model.CSVHandler10Columns;
 import Model.CSVHandler2Columns;
@@ -145,7 +147,7 @@ public class mainWindow extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(new JFrame(), "Not implemented yet...");
+				actionBtnImport();
 				
 			}
 		});
@@ -234,9 +236,9 @@ public class mainWindow extends JFrame{
 				     null,
 				     null,
 				     0);
-			
+
 			//int nbWord = userText.length() - userText.replace(";", "").length(); //number of word to put in the grid (= number of ';' in user's input)
-			
+
 			
 			//The following lines will splits the user input and add each word(separated by ';') to the ArrayList<String> alWord
 			String[] tempTabString = userText.split(";");
@@ -376,6 +378,43 @@ public class mainWindow extends JFrame{
 		this.csvHandler.exportGridToCsv(destinationFile, this.alWord);
 		
 	}
+
+
+	/**
+	 *	Opens a JFileChooser window to choose which file of companies to import
+	 */
+	public void actionBtnImport(){
+		
+		File file = null;
+		this.csvHandler = new BasicCSVHandler();
+		JFileChooser chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV", "csv");
+		chooser.setFileFilter(filter);
+		int returnVal = chooser.showOpenDialog(this);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			this.csvHandler.updateNbCol();
+			
+			file = chooser.getSelectedFile();
+			this.nbCol = this.csvHandler.getNbColCsv(file);
+			System.out.println(this.alWord);
+			this.alWord = this.csvHandler.importCsv(file);
+			System.out.println(this.alWord);
+		}
+		
+
+		//Assign the correct behavior depending on user's selection
+		if(this.nbCol == 2) {this.generateGridBehavior = new GenerateGridBehavior2Columns();}				
+		if(this.nbCol == 4) {this.generateGridBehavior = new GenerateGridBehavior4Columns();}
+		if(this.nbCol == 6) {this.generateGridBehavior = new GenerateGridBehavior6Columns();}
+		if(this.nbCol == 8) {this.generateGridBehavior = new GenerateGridBehavior8Columns();}
+		if(this.nbCol == 10){this.generateGridBehavior = new GenerateGridBehavior10Columns();}
+			
+		
+		
+		
+		this.generateGrid();
+
+		}
 }
 
 
