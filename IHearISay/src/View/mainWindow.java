@@ -346,7 +346,6 @@ public class mainWindow extends JFrame{
 		if(this.nbCol == 8) {this.csvHandler = new CSVHandler8Columns();}	
 		if(this.nbCol == 10){this.csvHandler = new CSVHandler10Columns();}	
 		
-		
 		JFileChooser chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV", "csv");
 		chooser.setFileFilter(filter);
@@ -391,17 +390,14 @@ public class mainWindow extends JFrame{
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV", "csv");
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showOpenDialog(this);
+		
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			this.csvHandler.updateNbCol();
-			
 			file = chooser.getSelectedFile();
-			this.nbCol = this.csvHandler.getNbColCsv(file);
-			System.out.println(this.alWord);
 			this.alWord = this.csvHandler.importCsv(file);
-			System.out.println(this.alWord);
+			this.nbCol = this.csvHandler.getNbColumnsRead();
+			this.nbButtons = (this.alWord.size()*2)+2;
 		}
 		
-
 		//Assign the correct behavior depending on user's selection
 		if(this.nbCol == 2) {this.generateGridBehavior = new GenerateGridBehavior2Columns();}				
 		if(this.nbCol == 4) {this.generateGridBehavior = new GenerateGridBehavior4Columns();}
@@ -409,11 +405,7 @@ public class mainWindow extends JFrame{
 		if(this.nbCol == 8) {this.generateGridBehavior = new GenerateGridBehavior8Columns();}
 		if(this.nbCol == 10){this.generateGridBehavior = new GenerateGridBehavior10Columns();}
 			
-		
-		
-		
 		this.generateGrid();
-
 		}
 }
 

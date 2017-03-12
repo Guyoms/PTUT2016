@@ -12,6 +12,7 @@ public interface CSVHandler {
 	
 	public ArrayList<String> importCsv(File file);
 	
+	public int getNbColumns(File file);
 	
-	public int getNbColCsv(File file);
+	public int getNbColumnsRead();
 }

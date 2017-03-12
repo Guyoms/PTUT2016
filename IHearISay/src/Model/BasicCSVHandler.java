@@ -18,6 +18,9 @@ public class BasicCSVHandler implements CSVHandler{
 	//It will therefore vary on the several implementations of this class to match the grid created by the user
 	private int nbColumns = 2;
 	
+	//This variable represent the number of columns in the csv being read.
+	private int nbColumnsRead;
+	
 	private FileWriter myFileWriter = null;
 	private BufferedWriter myBufferedWriter = null;
 
@@ -130,7 +133,7 @@ public class BasicCSVHandler implements CSVHandler{
 	}
 
 	/**
-	 *	Importation method for the companies
+	 *	Importation method for the csv
 	 */
 	@Override
 	public ArrayList<String> importCsv(File file) {
@@ -138,16 +141,19 @@ public class BasicCSVHandler implements CSVHandler{
 			BufferedReader tampon = null;
 			ArrayList<String> aLImport = new ArrayList<String>();
 			String[] tabString ;
-			int taille;
+			int sizeLine;
 		
 			try {
 				// file path
 				monFichier = new FileReader(file.getAbsolutePath());
 				tampon = new BufferedReader(monFichier);
 
-				// read a line of the file .csv
+				// read the first line of the file .csv
 				String ligneTemp = tampon.readLine();
-				// read the 2nd line to avoid the column's title
+				tabString = ligneTemp.split(";");
+				this.setNbColumnsRead(tabString.length);
+				
+				//Start of the actual content (first line only acting as a header)
 				ligneTemp = tampon.readLine();
 				
 				
@@ -160,10 +166,11 @@ public class BasicCSVHandler implements CSVHandler{
 				while (ligneTemp != null) {					
 					tabString = ligneTemp.split(";");
 					
-					taille = tabString.length;
-					for (int i = 0; i < taille; i+=2) {
+					sizeLine = tabString.length;
+					//This for start at 1 in order to skip the first cell, assuming it is always "Start" and is therefore not required in the ArrayList
+					for (int i = 1; i < sizeLine; i+=2) {
 						
-						if((!(i == 0)) || i ==  taille - 1){
+						if(!tabString[i].equals("End ")){
 							aLImport.add(tabString[i]);
 						}
 						
@@ -187,11 +194,15 @@ public class BasicCSVHandler implements CSVHandler{
 	}
 
 	@Override
-	public int getNbColCsv(File file) {
-		
-		int[] borne = new int[this.nbColumns];
-		
-		return borne.length;
+	public int getNbColumns(File file) {
+		return this.nbColumns;
 	}
-		
+	
+	public int getNbColumnsRead(){
+		return this.nbColumnsRead;
+	}
+	
+	public void setNbColumnsRead(int nbCol){
+		this.nbColumnsRead = nbCol; 
+	}
 }
