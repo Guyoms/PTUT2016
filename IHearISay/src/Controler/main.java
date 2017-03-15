@@ -1,9 +1,16 @@
 package Controler;
 
-import javax.swing.JFrame;
+import java.awt.Color;
 
+import javax.swing.JFrame;
 import View.mainWindow;
 
+
+
+/**
+ * This method launches the application
+ *
+ */
 public class main {
 
 	public static void main(String[] args) {

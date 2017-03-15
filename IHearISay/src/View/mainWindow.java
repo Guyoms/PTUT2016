@@ -1,7 +1,9 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,18 +12,18 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import Model.BasicCSVHandler;
 import Model.CSVHandler;
 import Model.CSVHandler10Columns;
@@ -36,7 +38,11 @@ import Model.GenerateGridBehavior4Columns;
 import Model.GenerateGridBehavior6Columns;
 import Model.GenerateGridBehavior8Columns;
 
-
+/**
+ * 
+ * This is the main class, where the window is generated and updated.
+ *
+ */
 public class mainWindow extends JFrame{
 
 	private int 				 nbLines   	= 5;
@@ -52,7 +58,14 @@ public class mainWindow extends JFrame{
 	public mainWindow(String titre) {
         super(titre);
         
-        //Interface graphique
+        //Those 4 lines manage the language of the applications
+        Locale newLocale = new Locale("en") ;
+    	Locale.setDefault(newLocale);
+    	UIManager.getDefaults().setDefaultLocale(newLocale);
+    	JComponent.setDefaultLocale(newLocale);
+    	
+    	
+        //Graphical interface
 		try {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 		        if ("Nimbus".equals(info.getName())) {
@@ -63,6 +76,7 @@ public class mainWindow extends JFrame{
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+
         
         super.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	    this.addWindowListener(new WindowAdapter() {
@@ -74,19 +88,24 @@ public class mainWindow extends JFrame{
 		});	
 	    
         setContentPane(inside());
-    	Dimension dimensionMinimale = new Dimension(320,250);
+    	Dimension dimensionMinimale = new Dimension(900,250);
     	this.setMinimumSize(dimensionMinimale);
         pack();
         
     }
 	
+	/**
+	 * This method creates the interface
+	 * @return JPanel
+	 */
 	private JPanel inside() {
 
+		
     	JPanel boutons = new JPanel(new GridLayout(6,1));
     	JPanel result = new JPanel(new BorderLayout());
     	
     	
-// Creation of the grid 
+    	// Creation of the grid 
     	Border BorderTitledGrid = BorderFactory.createTitledBorder("Grid");
     	Border BorderTitledGrid2 = BorderFactory.createTitledBorder("Your choice");
     	
@@ -94,25 +113,18 @@ public class mainWindow extends JFrame{
     	this.alWord = new ArrayList<String>(); //Reset the ArrayList to have empty buttons
     	fillGrid(alWord);
     	grid.setBorder(BorderTitledGrid);
-    	//TODO : Try to adjust the size of the grid when modyfiying it's content in order to have good looking buttons 
-//End of the creation of the grille 
+    	//End of the creation of the grid
 
-    	//Dimension d = new Dimension(15, 110);
-    	// Creation des boutons de fonctionnalites
+
+    	// Creation of the buttons that manage functionalities
     	JButton butCreer    = new JButton("Create");
     	JButton butShuffle  = new JButton("Shuffle");
     	JButton butImport   = new JButton("Import");
     	JButton butExport   = new JButton("Export");
-    	JButton butImprimer = new JButton("Imprimer");
-    	JScrollPane list    = new JScrollPane();
+    	
  
-    	/*
-    	butCreer.setPreferredSize(d);
-    	butImport.setPreferredSize(d);
-    	butExport.setPreferredSize(d);
-    	butImprimer.setPreferredSize(d);
-    	*/
-    	list.setPreferredSize(new Dimension(170,120));
+
+    	butCreer.setPreferredSize(new Dimension(170,120));
     	
     	
     	//Adding the Listeners
@@ -166,8 +178,6 @@ public class mainWindow extends JFrame{
     	boutons.add(butShuffle);
     	boutons.add(butImport);
     	boutons.add(butExport);
-    	boutons.add(butImprimer);
-    	boutons.add(list);
     	
     	boutons.setBorder(BorderTitledGrid2);
 
@@ -178,6 +188,9 @@ public class mainWindow extends JFrame{
     	return result;
     }
 	
+	/**
+	 *  This method manages the create button 
+	 */
 	public void actionBtnCreate(){
        
 		Object[] options = {"Lines and Columns",
@@ -291,8 +304,16 @@ public class mainWindow extends JFrame{
     				if(i/2<this.alWord.size() && this.alWord.size()!=0){buttonText = this.alWord.get(i/2);}
     				else{buttonText = this.defaultText;}
     				
-    			
+    				
     				HearSayCombo temp = new HearSayCombo(buttonText, grid);
+    				temp.getISayButton().setFont(new Font("times new roman",Font.PLAIN,14));
+    				temp.getIHearButton().setFont(new Font("times new roman",Font.PLAIN,14));
+    				
+    				
+    				if (i==0 && temp.getISayButton().getText().equals(" ")){
+    					temp.getISayButton().setText("Click to edit"); 
+    				}
+    				
     				temp.getISayButton().addActionListener(new ActionListener() {
 					
     					@Override
@@ -322,7 +343,6 @@ public class mainWindow extends JFrame{
 	 * 
 	 * /!\ In order to use those classes, if is extremely important to use the generateNbButtons(nbButtons) first, then use the other methods
 	 */
-	
 	public void generateGrid(){
 		this.nbButtons = this.generateGridBehavior.generateNbButtons(this.nbButtons);
 		this.nbLines = this.generateGridBehavior.generateNbLines(this.nbButtons);
@@ -332,12 +352,16 @@ public class mainWindow extends JFrame{
 	}
 	
 	
-	
-	//Shuffle the words in the ArrayList this.alWord
+	/**
+	 * Shuffle the words
+	 */
 	public void shuffleWords(){
 		Collections.shuffle(alWord);
 	}
 	
+	/**
+	 * This method manages the export button 
+	 */
 	public void actionBtnExport(){
 		
 		if(this.nbCol == 2) {this.csvHandler = new CSVHandler2Columns();}				
@@ -380,6 +404,7 @@ public class mainWindow extends JFrame{
 
 
 	/**
+	 *  This method manages the import button 
 	 *	Opens a JFileChooser window to choose which file of companies to import
 	 */
 	public void actionBtnImport(){

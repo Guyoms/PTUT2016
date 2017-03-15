@@ -10,8 +10,12 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-//This class is just the basic structure of the csvHandler and ultimately not desired in the final program. Consider it as a sketch rather than a functioning class.
-//Several variation will be needed with specified numbers of columns to import/export (cf : gridGenerator)
+/**
+ * This class is just the basic structure of the csvHandler and ultimately not desired in the final program. Consider it as a sketch rather than a functioning class.
+ * Several variation will be needed with specified numbers of columns to import/export (cf : gridGenerator).
+ * 
+ */
+
 public class BasicCSVHandler implements CSVHandler{
 	
 	//This variable represent the number of columns desired in the final csv file.
@@ -24,6 +28,9 @@ public class BasicCSVHandler implements CSVHandler{
 	private FileWriter myFileWriter = null;
 	private BufferedWriter myBufferedWriter = null;
 
+	/**
+	 *	Export method for the csv
+	 */
 	@Override
 	public boolean exportGridToCsv(File file, ArrayList<String> alString) {
 		//Return value used to verify if the export worked properly
@@ -122,6 +129,10 @@ public class BasicCSVHandler implements CSVHandler{
 		return this.nbColumns;
 	}
 	
+	/**
+	 * Set the number of columns
+	 * @param newNbCol
+	 */
 	public void setNbColumns(int newNbCol){
 		this.nbColumns = newNbCol;
 	}
@@ -202,6 +213,10 @@ public class BasicCSVHandler implements CSVHandler{
 		return this.nbColumnsRead;
 	}
 	
+	/**
+	 * Set the number of columns to read
+	 * @param nbCol
+	 */
 	public void setNbColumnsRead(int nbCol){
 		this.nbColumnsRead = nbCol; 
 	}

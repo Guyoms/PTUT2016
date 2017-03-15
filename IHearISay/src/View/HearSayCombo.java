@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
-/*
+/**
  * This class allows the creation of a pair of button I Hear/I Say
  * The primary function of this class is allowing the programmer to
  * modify the text of both button without having to call them each. 
@@ -25,7 +25,11 @@ public class HearSayCombo {
 	
 	
 	
-	//Should be used over default constructor, create empty buttons and add them to panelToAddButtons
+	
+	/**
+	 * Should be used over default constructor, create empty buttons and add them to panelToAddButtons
+	 * @param panelToAddButtons
+	 */
 	public HearSayCombo(JPanel panelToAddButtons){
 		this.IHearButton = new JButton("");
 		this.ISayButton  = new JButton("");
@@ -34,7 +38,12 @@ public class HearSayCombo {
 		this.standardEdit(panelToAddButtons);
 	}
 	
-	//Standard constructor, create buttons with text textButtons, and add them to panelToAddButtons
+
+	/**
+	 * Standard constructor, create buttons with text textButtons, and add them to panelToAddButtons
+	 * @param textButtons
+	 * @param panelToAddButtons
+	 */
 	public HearSayCombo(String textButtons, JPanel panelToAddButtons){
 		this.IHearButton = new JButton(textButtons);
 		this.ISayButton  = new JButton(textButtons);
@@ -42,14 +51,21 @@ public class HearSayCombo {
 		this.IHearButton.setPreferredSize(taille);
 		this.standardEdit(panelToAddButtons);
 	}
-	
-	//Edit the text of both buttons
+
+	/**
+	 * Edit the text of both buttons
+	 * @param textButtons
+	 */
 	public void setText(String textButtons){
 		this.IHearButton.setText(textButtons);
 		this.ISayButton.setText(textButtons);
 	}
 	
-	//Set all buttons to default settings for this app and add them to panelToAddButtons
+	
+	/**
+	 * Set all buttons to default settings for this app and add them to panelToAddButtons
+	 * @param panelToAddButtons
+	 */
 	public void standardEdit(JPanel panelToAddButtons){
 		
 		this.IHearButton.setBackground(colorIHear); 
@@ -57,20 +73,29 @@ public class HearSayCombo {
 		
 		this.IHearButton.setEnabled(false);
 		
-		this.IHearButton.setBorder(BorderButtons);
-		this.ISayButton.setBorder(BorderButtons);
+		//this.IHearButton.setBorder(BorderButtons);
+		//this.ISayButton.setBorder(BorderButtons);
 		
 		panelToAddButtons.add(this.ISayButton);
 		panelToAddButtons.add(this.IHearButton);
 	}
 	
-	//Set new colors for the buttons
+
+	/**
+	 * Set new colors for the buttons
+	 * @param colorIHear
+	 * @param colorISay
+	 */
 	public void setColors(Color colorIHear, Color colorISay){
 		this.colorIHear = colorIHear;
 		this.colorISay  = colorISay;
 	}
 	
-	//Set a new border for both buttons
+
+	/**	
+	 * Set a new border for both buttons
+	 * @param newBorder
+	 */
 	public void setBorder(Border newBorder){
 		this.BorderButtons = newBorder;
 	}
@@ -78,4 +103,10 @@ public class HearSayCombo {
 	public JButton getISayButton(){
 		return this.ISayButton;
 	}
+	
+	public JButton getIHearButton(){
+		return this.IHearButton;
+	}
+	
+	
 }
